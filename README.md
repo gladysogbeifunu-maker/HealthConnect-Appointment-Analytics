@@ -1,12 +1,14 @@
 # HealthConnect Appointment No-Show Analysis
 
-Data analytics project investigating patient appointment attendance and no-show patterns for a healthcare clinic, using **SQL** for data exploration, validation, and analysis, and **Power BI** for visualization and dashboarding.
+Data analytics project investigating patient appointment attendance and no-show patterns for a healthcare clinic, using **SQL** for data cleaning, exploration, validation, and analysis, and **Power BI** for visualization and dashboarding.
 
 ## 📋 Project Background
 
-HealthConnect needed to better understand patient appointment attendance and no-show patterns. Missed appointments affect clinic operations, staff scheduling, service delivery, and the efficient use of available appointment slots.
+HealthConnect needed to better understand patient appointment attendance and no-show patterns. Missed appointments can affect clinic operations, staff scheduling, service delivery, and the efficient use of available appointment slots.
 
-This project establishes the analytical foundation for investigating the factors associated with appointment attendance, no-shows, and cancellations — using SQL for data exploration, validation, and cleaning, and Power BI for trend analysis and insight communication.
+This project analyses appointment data to identify factors associated with attendance, no-shows, and cancellations. The analysis uses SQL to clean, validate, and explore the data, with Power BI used to communicate findings through an interactive dashboard.
+
+---
 
 ## 🗂️ Dataset
 
@@ -20,74 +22,268 @@ The HealthConnect appointment dataset contains **5,000 records** and **18 variab
 | `age` / `age_group` | Patient age and age category |
 | `appointment_type` | Type of appointment booked |
 | `booking_date` / `appointment_date` | Booking and scheduled dates |
-| `appointment_day` / `appointment_time` | Day of week and time category |
+| `appointment_day` / `appointment_time` | Day of week and appointment period |
 | `booking_lead_days` | Days between booking and appointment |
 | `previous_appointments` / `previous_no_shows` | Patient appointment history |
 | `reminder_sent` / `reminder_channel` | Reminder status and channel used |
 | `distance_to_clinic_km` | Estimated distance from patient to clinic |
 | `waiting_time_minutes` | Waiting time associated with the appointment |
-| `appointment_outcome` | Attended, No-Show, or Cancelled (primary outcome variable) |
+| `appointment_outcome` | Attended, No-Show, or Cancelled |
 
-**Current outcome distribution:**
-- No-Show: 2,423 records
-- Attended: 2,314 records
-- Cancelled: 263 records
+### Appointment Outcome Distribution
 
-## 🔍 Data Quality Assessment
-
-An initial review was conducted before analysis:
-
-- **Missing values** found in `reminder_channel` (1,366), `distance_to_clinic_km` (90), and `waiting_time_minutes` (60). Missing `reminder_channel` values are logically tied to `reminder_sent` and treated as "No Reminder Sent" rather than errors.
-- **No fully duplicated records** identified; `appointment_id` uniqueness to be confirmed in further analysis.
-- **Data types** reviewed and confirmed appropriate for the planned analysis (dates, numeric, decimal, and categorical fields).
-- **Validity checks** passed — including age ranges, booking lead time ranges, and consistency between related fields (e.g. age vs. age group, appointment date vs. appointment day, reminder sent vs. reminder channel).
-
-## ❓ Business Questions
-
-1. What proportion of scheduled appointments result in attendance, no-shows, and cancellations?
-2. Which patient and appointment characteristics are associated with higher no-show rates?
-3. Do patients with a history of previous no-shows have a higher likelihood of missing future appointments?
-4. Are appointment reminders associated with improved attendance and reduced no-show rates?
-5. Do no-show rates differ by reminder channel?
-6. Are there particular days, times, or appointment types with consistently higher no-show rates?
-
-## 📊 Proposed KPIs
-
-| KPI | Definition |
-|---|---|
-| **No-Show Rate** | % of scheduled appointments resulting in a No-Show |
-| **Appointment Attendance Rate** | % of scheduled appointments resulting in Attended |
-| **No-Show Rate by Segment** | No-show rate across age group, appointment type, day, time, lead time, and distance categories |
-| **Repeat No-Show Rate** | No-show rate for patients with prior no-shows vs. those without |
-| **Reminder Effectiveness Rate** | Attendance/no-show comparison by reminder status and channel |
-
-## 🛠️ Analysis Approach
-
-1. **Load & understand the data** — review structure, data types, and key categories in SQL
-2. **Data quality checks** — missing values, duplicates, unique IDs, logical consistency
-3. **Define the analysis population** — decide how cancelled appointments are treated in KPI calculations
-4. **Exploratory analysis** — compare appointment outcomes across patient and appointment characteristics in SQL
-5. **Prepare data for Power BI** — create calculated categories (e.g. lead time ranges, distance ranges, attendance/no-show indicators)
-6. **Power BI dashboard** — interactive visualizations of attendance trends, no-show patterns by segment, reminder effectiveness, and scheduling patterns
-
-## ⚠️ Assumptions & Limitations
-
-- Each record represents one appointment, with `appointment_id` as a unique identifier.
-- Recorded appointment outcomes are assumed accurate.
-- The dataset is observational — associations (e.g. reminders vs. attendance) should not be interpreted as causation without further evidence.
-- Missing `distance_to_clinic_km` and `waiting_time_minutes` values will need an agreed treatment strategy before those variables are used in analysis.
-
-## 🚀 Tools
-
-- **SQL** — data exploration, validation, cleaning, and analysis
-- **Power BI** — trend analysis, dashboards, and insight communication
-
-## 📌 Project Status
-
-Currently in the initial data assessment and planning phase (Week 4). Next steps: detailed SQL exploratory analysis, KPI calculation, and Power BI dashboard development.
+- **No-Show:** 2,423 appointments, 48.46%
+- **Attended:** 2,314 appointments, 46.28%
+- **Cancelled:** 263 appointments, 5.26%
 
 ---
 
-*This project is part of an ongoing data analytics track focused on healthcare operations analytics.*# HealthConnect-Appointment-Analytics
+## 🔍 Data Preparation and Quality Assessment
 
-Link to the file....https://docs.google.com/spreadsheets/d/1sxLJDlv2ORN5LuF40z9Ywd3qHzriJwA5pEzbrJ-qcek/edit?usp=sharing. 
+The dataset was reviewed and prepared before analysis.
+
+The process included:
+
+- Checking the dataset structure and column data types.
+- Identifying missing values.
+- Checking for duplicate records.
+- Validating appointment and patient identifiers.
+- Reviewing age and booking lead time ranges.
+- Checking consistency between related fields, including age and age group, appointment date and appointment day, and reminder status and reminder channel.
+- Preparing the cleaned working dataset for analysis.
+
+The final cleaned dataset was stored in:
+
+`dbo.HealthConnect_Appointment_Working`
+
+---
+
+## ❓ Business Questions
+
+The analysis focused on the following questions:
+
+1. What is the overall appointment attendance pattern?
+2. What percentage of appointments result in no-shows?
+3. How do appointment outcomes vary by appointment type?
+4. Does patient age or age group relate to no-show behaviour?
+5. Do reminders affect attendance and no-show rates?
+6. Does waiting time affect appointment outcomes?
+7. Does booking lead time affect no-show patterns?
+8. Does distance to the clinic influence attendance?
+9. Do patients with previous no-shows have a higher risk of missing future appointments?
+10. Are there patterns by appointment day or appointment time?
+
+---
+
+## 📊 Key KPIs
+
+| KPI | Definition |
+|---|---|
+| **Total Appointments** | Total number of scheduled appointments |
+| **No-Show Rate** | Percentage of appointments resulting in a No-Show |
+| **Attendance Rate** | Percentage of appointments resulting in Attended |
+| **Cancellation Rate** | Percentage of appointments resulting in Cancelled |
+| **No-Show Rate by Segment** | No-show rate across appointment and patient characteristics |
+| **Reminder Comparison** | Attendance and no-show comparison by reminder status |
+| **Repeat No-Show Pattern** | No-show patterns based on previous no-show history |
+
+---
+
+## 🛠️ Analysis Approach
+
+### 1. Data Understanding
+
+The dataset structure, data types, and key variables were reviewed to understand the available information.
+
+### 2. Data Preparation
+
+Missing values, duplicates, data consistency, and logical relationships between fields were assessed before analysis.
+
+### 3. Exploratory Data Analysis
+
+SQL was used to investigate appointment outcomes and no-show patterns across:
+
+- Appointment type
+- Age group
+- Reminder status
+- Waiting time
+- Booking lead time
+- Distance to clinic
+- Previous no-shows
+- Appointment day
+- Appointment time
+
+### 4. Power BI Visualization
+
+The cleaned dataset is being used to build a Power BI dashboard for monitoring appointment performance and no-show patterns.
+
+---
+
+# 📈 Key Findings
+
+### High Overall No-Show Rate
+
+HealthConnect recorded a **48.46% no-show rate**, meaning 2,423 out of 5,000 appointments resulted in missed appointments.
+
+This highlights a significant attendance challenge for the clinic.
+
+### Appointment Type
+
+Follow-up appointments recorded the highest no-show rate at **51.23%**, followed by Diagnostic Tests at **49.75%**.
+
+### Age Group
+
+No-show rates varied across age groups. Patients aged **55–64 recorded the highest rate at 50.75%**, while patients aged **65 and above had the lowest rate at 45.12%**.
+
+### Appointment Reminders
+
+Patients who did not receive reminders had a no-show rate of **51.39%**, compared with **47.36%** among patients who received reminders.
+
+This suggests that reminders may be associated with improved attendance.
+
+### Waiting Time
+
+No-show rates generally increased as waiting time increased, suggesting that longer waiting periods may be associated with a higher likelihood of missed appointments.
+
+### Booking Lead Time
+
+Booking lead time showed one of the clearest patterns in the analysis.
+
+| Booking Lead Time | No-Show Rate |
+|---|---:|
+| 0–7 days | 27.81% |
+| 8–14 days | 33.55% |
+| 15–30 days | 43.21% |
+| 31+ days | 60.49% |
+
+Appointments booked further in advance were significantly more likely to result in no-shows.
+
+### Distance to Clinic
+
+Patients living more than **20 km from the clinic had the highest no-show rate at 56.35%**, compared with **46.40%** among patients living less than 5 km away.
+
+### Previous No-Shows
+
+Patients with a history of previous no-shows were more likely to miss future appointments. The no-show rate generally increased as the number of previous no-shows increased.
+
+This makes previous attendance behaviour an important indicator of future no-show risk.
+
+### Appointment Day
+
+Sunday recorded the highest no-show rate at **50.47%**, while Friday recorded the lowest at **46.57%**. The variation across appointment days was relatively small.
+
+### Appointment Time
+
+Appointment patterns were also analysed across Morning, Afternoon, and Evening periods to identify differences in no-show behaviour.
+
+---
+
+# 💡 Business Insights
+
+The analysis shows that HealthConnect's no-show challenge is associated with several patient and appointment characteristics.
+
+The strongest patterns were observed around:
+
+- Longer booking lead times
+- Previous no-show history
+- Longer waiting periods
+- Greater distance from the clinic
+- Reminder status
+
+These findings suggest that HealthConnect can take a more targeted approach to reducing missed appointments rather than applying the same communication process to every patient.
+
+---
+
+# 📌 Business Recommendations
+
+### 1. Implement Targeted Appointment Reminders
+
+Provide additional reminders and follow-up communication to patients with a higher risk of missing appointments.
+
+### 2. Identify High-Risk Patients
+
+Use previous no-show history and appointment characteristics to identify patients who may require additional follow-up.
+
+### 3. Review Long Booking Lead Times
+
+Appointments booked 31 or more days in advance recorded the highest no-show rate. Where possible, appointments should be reconfirmed closer to the scheduled date.
+
+### 4. Monitor Long Waiting Periods
+
+HealthConnect should review appointments with long waiting periods and explore ways to reduce unnecessary delays.
+
+### 5. Address Distance-Related Barriers
+
+Patients travelling longer distances may benefit from earlier confirmation, flexible scheduling, or virtual appointment options where appropriate.
+
+### 6. Monitor No-Show Patterns Continuously
+
+A Power BI dashboard can help HealthConnect monitor appointment performance and identify emerging no-show patterns over time.
+
+---
+
+## 📊 Power BI Dashboard
+
+The Power BI dashboard is being developed from the cleaned HealthConnect dataset.
+
+It will monitor:
+
+- Total Appointments
+- No-Show Rate
+- Attendance Rate
+- Cancellation Rate
+- Appointment Outcomes
+- No-Show Rate by Appointment Type
+- No-Show Rate by Age Group
+- Reminder Status
+- Booking Lead Time
+- Previous No-Shows
+- Distance to Clinic
+- Appointment Day
+- Appointment Time
+
+*A dashboard screenshot will be added after the visualization is completed.*
+
+---
+
+## ⚠️ Assumptions and Limitations
+
+- Each record represents one appointment.
+- Appointment outcomes are assumed to be accurately recorded.
+- The dataset is observational, so relationships identified in the analysis should not automatically be interpreted as causation.
+- Some variables contain missing values and findings involving those fields should be interpreted within the context of the available data.
+- Very small groups, particularly patients with a high number of previous no-shows, should be interpreted cautiously.
+
+---
+
+## 🚀 Tools Used
+
+- **SQL Server Management Studio (SSMS):** Data cleaning, validation, and exploratory data analysis
+- **SQL:** Data querying and analysis
+- **Power BI:** Dashboard development and visualization
+- **DAX:** KPI and measure creation
+- **Excel:** Data export and supporting data review
+- **GitHub:** Project documentation and portfolio presentation
+
+---
+
+## 📂 Project Structure
+
+```text
+HealthConnect-Appointment-Analytics/
+│
+├── Data/
+│   └── Cleaned HealthConnect dataset
+│
+├── SQL/
+│   ├── Data Cleaning.sql
+│   └── EDA Queries.sql
+│
+├── PowerBI/
+│   └── HealthConnect Dashboard.pbix
+│
+├── Images/
+│   └── Dashboard screenshots
+│
+└── README.md[HealthConnect SQL file.sql](https://github.com/user-attachments/files/31883922/HealthConnect.SQL.file.sql)
+[HealthConnect Analysis.pdf](https://github.com/user-attachments/files/31883921/HealthConnect.Analysis.pdf)
