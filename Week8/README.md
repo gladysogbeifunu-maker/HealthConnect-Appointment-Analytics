@@ -1,7 +1,12 @@
 HealthConnect Appointment No-Show Analysis
 Week 8 — Final Analytics, Dashboard & Business Insights (Data Analytics Track)
 
-Author: Gladys Ogbeifun Programme: AnalystLab Africa — Data Analytics Internship Project: HealthConnect Clinic — reducing missed appointments through data & AI
+Author: Gladys Ogbeifun 
+Programme: AnalystLab Africa — Data Analytics Internship 
+[HealthConnect_DataScience_Model_Results.pdf](https://github.com/user-attachments/files/32696333/HealthConnect_DataScience_Model_Results.pdf)
+[HealthConnect_Week8_Report.pdf](https://github.com/user-attachments/files/32696327/HealthConnect_Week8_Report.pdf)
+[HealthConnect_Week8_Presentation.pdf](https://github.com/user-attachments/files/32696320/HealthConnect_Week8_Presentation.pdf)
+Project: HealthConnect Clinic — reducing missed appointments through data & AI
 
 Overview
 
