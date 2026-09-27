@@ -3,9 +3,6 @@ Week 8 — Final Analytics, Dashboard & Business Insights (Data Analytics Track)
 
 Author: Gladys Ogbeifun 
 Programme: AnalystLab Africa — Data Analytics Internship 
-[HealthConnect_DataScience_Model_Results.pdf](https://github.com/user-attachments/files/32696333/HealthConnect_DataScience_Model_Results.pdf)
-[HealthConnect_Week8_Report.pdf](https://github.com/user-attachments/files/32696327/HealthConnect_Week8_Report.pdf)
-[HealthConnect_Week8_Presentation.pdf](https://github.com/user-attachments/files/32696320/HealthConnect_Week8_Presentation.pdf)
 Project: HealthConnect Clinic — reducing missed appointments through data & AI
 
 Overview
@@ -60,6 +57,7 @@ Await Data Science's interaction-term test before treating the high-risk segment
 Continue avoiding causal claims — statistical significance is not proof of causation
 
 Files in This Folder
-HealthConnect_Week8_Report.docx — full Final Analytics & Decision Support Package
-HealthConnect_Week8_Presentation.pptx — 10-slide stakeholder deck
-HealthConnect_Data Science_Statistical Validation Result.pdf — Cross-Track Model Output and Interpretation
+[HealthConnect_Week8_Presentation.pdf](https://github.com/user-attachments/files/32696367/HealthConnect_Week8_Presentation.pdf)
+[HealthConnect_Week8_Report.pdf](https://github.com/user-attachments/files/32696366/HealthConnect_Week8_Report.pdf)
+[HealthConnect_DataScience_Model_Results.pdf](https://github.com/user-attachments/files/32696364/HealthConnect_DataScience_Model_Results.pdf)
+
